@@ -38,3 +38,21 @@ Another option on the command line is [samtools](https://github.com/samtools/sam
 
 `samtools tview --reference sequence.fasta -p NC_045512.2:23000 align.bam`
 
+## Variant calling
+
+[BCFtools](https://github.com/samtools/bcftools) can be used for variant calling
+
+`bcftools mpileup -f sequence.fasta align.bam | bcftools call --ploidy 1 -mv -Ob -o calls.bcf`
+
+`bcftools view calls.bcf | less`
+
+## Variant annotation
+
+Variant annotation online using [VEP](https://covid-19.ensembl.org/info/docs/tools/vep/index.html)
+
+`bcftools view calls.bcf  | cut -f 1-5 | grep -v "^#"`
+
+## Lineage assignment
+
+Common S gene mutations for each lineage are available [here](https://outbreak.info/compare-lineages)
+
